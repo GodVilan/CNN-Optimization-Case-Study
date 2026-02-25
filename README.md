@@ -108,4 +108,4 @@ Deep learning performance is driven by disciplined experimentation — not just 
 
 **Srikant Reddy Nandireddy**  
 Graduate Student – Data Science & AI  
-Open to Data Science / Machine Learning opportunities  
+Open to Data Science / Machine Learning opportunities
