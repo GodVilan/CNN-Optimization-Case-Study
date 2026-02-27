@@ -1,5 +1,5 @@
-# CNN Optimization Case Study  
-## Architecture vs Optimizer Impact on CIFAR-10  
+# Optimization Dynamics Study in CNNs  
+## An Empirical Investigation of Optimizer Behavior on CIFAR-10  
 
 **Author:** Srikant Reddy Nandireddy  
 Graduate Student – Data Science & AI  
@@ -8,17 +8,21 @@ Graduate Student – Data Science & AI
 
 ## 📌 Overview
 
-This project investigates how architectural depth and optimizer selection impact Convolutional Neural Network (CNN) performance on the CIFAR-10 dataset.
+This project investigates how optimization strategy influences convergence behavior, stability, and generalization performance in Convolutional Neural Networks (CNNs).
 
-Rather than simply increasing model complexity, this study evaluates how training dynamics and optimization strategy influence generalization.
+Rather than simply increasing architectural complexity, I conduct controlled experiments where the model architecture is fixed and only optimization dynamics are varied.
+
+The goal is to understand how learning rate, momentum, adaptive updates, and weight decay affect training behavior and final performance.
 
 ---
 
-## 🎯 Research Questions
+## 🎯 Research Objectives
 
-1. Does increasing CNN depth improve performance?  
-2. How significantly does optimizer choice affect convergence and generalization?  
-3. How can overfitting be diagnosed using validation behavior?  
+1. How sensitive is SGD to learning rate selection?  
+2. Does momentum stabilize convergence in deep CNNs?  
+3. How do adaptive optimizers (Adam) compare to non-adaptive methods (SGD)?  
+4. Does decoupled weight decay (AdamW) improve generalization?  
+5. How does optimizer choice affect the generalization gap?
 
 ---
 
@@ -30,53 +34,67 @@ Rather than simply increasing model complexity, this study evaluates how trainin
 - 50,000 training samples  
 - 10,000 test samples  
 
----
-
-## 🏗 Model Architectures
-
-### Baseline CNN
-- Conv(32) → MaxPooling  
-- Dense(128)  
-- Softmax Output  
-
-### Deep CNN
-- 3 Convolutional Blocks (32 → 64 → 128 filters)  
-- Dropout Regularization  
-- Fully Connected Layers (1024 → 512)  
-- Softmax Output  
-
-**Total parameters:** ~2.9M  
+Images are normalized to [0,1] and labels are one-hot encoded.
 
 ---
 
-## 🧪 Experiments & Results
+## 🏗 Controlled Architecture
 
-| Model | Optimizer | Test Accuracy |
-|-------|-----------|--------------|
-| Baseline CNN | SGD | **60.05%** |
-| Deep CNN | SGD | **69.90%** |
-| Deep CNN | Adam | **77.04%** |
+The CNN architecture remains constant across all experiments:
+
+- 2 Convolutional Blocks (32 → 64 filters)
+- Batch Normalization
+- Max Pooling
+- Dropout Regularization
+- Fully Connected Layer (512 units)
+- Softmax Output Layer
+
+Regularization:
+- Dropout
+- L2 Weight Decay
+
+This ensures performance differences arise from optimization dynamics rather than architectural changes.
 
 ---
 
-## 🔎 Key Findings
+## 🧪 Optimization Experiments
 
-- Increasing architectural depth improved representational capacity (+9.85% over baseline).  
-- Deep CNN trained with SGD exhibited validation divergence, indicating overfitting.  
-- Replacing SGD with Adam improved performance by over 7%.  
-- Optimization strategy had a larger impact on generalization than architectural complexity alone.  
+I evaluated:
+
+- SGD (learning rate sensitivity: 0.01 vs 0.001)
+- SGD + Momentum (0.9)
+- Adam
+- AdamW (decoupled weight decay)
+
+All experiments used:
+- Same batch size
+- Same epoch limit
+- Early stopping
+- Same validation split
 
 ---
 
-## 📈 Training Analysis
+## 📊 Evaluation Metrics
 
-Validation curves revealed:
+- Training Accuracy  
+- Validation Accuracy  
+- Test Accuracy  
+- Generalization Gap (Train − Validation)  
+- Training Time  
+- Confusion Matrix  
+- Per-Class Precision, Recall, F1-score  
 
-- Training accuracy continued increasing.  
-- Validation accuracy plateaued when using SGD.  
-- Adam provided smoother convergence and better stability.  
+---
 
-This highlights the importance of monitoring validation behavior rather than relying solely on training accuracy.
+## 📈 Key Findings
+
+- SGD is highly sensitive to learning rate selection.
+- Momentum significantly stabilizes convergence.
+- Adam accelerates convergence and narrows the generalization gap.
+- AdamW improves stability through decoupled weight decay.
+- Optimization dynamics influence performance as much as architectural depth.
+
+In this controlled setup, optimizer selection produced larger performance gains than increasing architectural complexity alone.
 
 ---
 
@@ -85,27 +103,37 @@ This highlights the importance of monitoring validation behavior rather than rel
 - Python  
 - TensorFlow / Keras  
 - NumPy  
+- Pandas  
 - Matplotlib  
+- Seaborn  
 
 ---
 
 ## 🧠 Conclusion
 
-This case study demonstrates that CNN performance is strongly influenced by optimization dynamics and training configuration.
+Deep learning performance is not solely determined by model depth.
 
-While architectural depth increases representational power, effective generalization depends on:
+Effective generalization depends on:
 
-- Optimizer selection  
-- Validation monitoring  
-- Controlled experimentation  
-- Overfitting diagnosis  
+- Careful optimizer selection  
+- Learning rate tuning  
+- Momentum control  
+- Regularization strategy  
+- Monitoring validation divergence  
 
-Deep learning performance is driven by disciplined experimentation — not just stacking additional layers.
+This study highlights the importance of disciplined experimentation when training deep neural networks.
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository  
+2. Install required dependencies  
+3. Run the notebook: `CNN_Optimization_Study.ipynb`  
 
 ---
 
 ## 📬 Contact
 
-**Srikant Reddy Nandireddy**  
-Graduate Student – Data Science & AI  
-Open to Data Science / Machine Learning opportunities
+Srikant Reddy Nandireddy  
+Open to Data Science | Machine Learning | Generative AI opportunities
