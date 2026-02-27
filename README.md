@@ -1,59 +1,51 @@
 # Optimization Dynamics Study in CNNs  
 ## An Empirical Investigation of Optimizer Behavior on CIFAR-10  
 
-**Author:** Srikant Reddy Nandireddy  
-Graduate Student – Data Science & AI  
-
 ---
 
 ## 📌 Overview
 
 This project investigates how optimization strategy influences convergence behavior, stability, and generalization performance in Convolutional Neural Networks (CNNs).
 
-Rather than simply increasing architectural complexity, I conduct controlled experiments where the model architecture is fixed and only optimization dynamics are varied.
+Instead of modifying architecture repeatedly, I fixed the model architecture and varied only optimization dynamics (learning rate, momentum, adaptive updates, and weight decay).
 
-The goal is to understand how learning rate, momentum, adaptive updates, and weight decay affect training behavior and final performance.
+The objective was to isolate the impact of optimization configuration on training stability and test performance.
 
 ---
 
 ## 🎯 Research Objectives
 
-1. How sensitive is SGD to learning rate selection?  
-2. Does momentum stabilize convergence in deep CNNs?  
-3. How do adaptive optimizers (Adam) compare to non-adaptive methods (SGD)?  
-4. Does decoupled weight decay (AdamW) improve generalization?  
-5. How does optimizer choice affect the generalization gap?
+- How sensitive is SGD to learning rate?
+- Does momentum improve convergence stability?
+- How do adaptive optimizers (Adam) compare to non-adaptive methods?
+- Does decoupled weight decay (AdamW) improve generalization?
+- How does optimizer choice influence the generalization gap?
 
 ---
 
 ## 📊 Dataset
 
-- CIFAR-10  
-- 60,000 RGB images (32×32)  
-- 10 object classes  
-- 50,000 training samples  
-- 10,000 test samples  
-
-Images are normalized to [0,1] and labels are one-hot encoded.
+- CIFAR-10 (60,000 RGB images, 10 classes)
+- 50,000 training samples
+- 10,000 test samples
+- Images normalized to [0,1]
+- One-hot encoded labels
 
 ---
 
 ## 🏗 Controlled Architecture
 
-The CNN architecture remains constant across all experiments:
+Architecture was kept constant across experiments:
 
-- 2 Convolutional Blocks (32 → 64 filters)
+- Two convolutional blocks (32 → 64 filters)
 - Batch Normalization
 - Max Pooling
 - Dropout Regularization
 - Fully Connected Layer (512 units)
 - Softmax Output Layer
-
-Regularization:
-- Dropout
 - L2 Weight Decay
 
-This ensures performance differences arise from optimization dynamics rather than architectural changes.
+This ensured performance differences arose solely from optimization dynamics.
 
 ---
 
@@ -61,79 +53,71 @@ This ensures performance differences arise from optimization dynamics rather tha
 
 I evaluated:
 
-- SGD (learning rate sensitivity: 0.01 vs 0.001)
+- SGD (learning rate = 0.01)
 - SGD + Momentum (0.9)
 - Adam
 - AdamW (decoupled weight decay)
 
 All experiments used:
+- Identical architecture
 - Same batch size
-- Same epoch limit
-- Early stopping
 - Same validation split
+- Early stopping
 
 ---
 
-## 📊 Evaluation Metrics
+## 📊 Final Results
 
-- Training Accuracy  
-- Validation Accuracy  
-- Test Accuracy  
-- Generalization Gap (Train − Validation)  
-- Training Time  
-- Confusion Matrix  
-- Per-Class Precision, Recall, F1-score  
-
----
-
-## 📈 Key Findings
-
-- SGD is highly sensitive to learning rate selection.
-- Momentum significantly stabilizes convergence.
-- Adam accelerates convergence and narrows the generalization gap.
-- AdamW improves stability through decoupled weight decay.
-- Optimization dynamics influence performance as much as architectural depth.
-
-In this controlled setup, optimizer selection produced larger performance gains than increasing architectural complexity alone.
+| Optimizer        | Test Accuracy | Generalization Gap |
+|------------------|--------------|--------------------|
+| **AdamW**        | **76.21%**   | 0.0403             |
+| SGD + Momentum   | 75.77%       | 0.0355             |
+| Adam             | 74.70%       | 0.0325             |
+| SGD (0.01)       | 74.41%       | 0.0054             |
 
 ---
 
-## 🛠 Technologies Used
+## 📈 Key Observations
 
-- Python  
-- TensorFlow / Keras  
-- NumPy  
-- Pandas  
-- Matplotlib  
-- Seaborn  
+- SGD is sensitive to learning rate selection.
+- Momentum improves convergence stability.
+- Adam converges quickly but does not guarantee superior generalization.
+- AdamW achieved the highest test accuracy through decoupled weight decay.
+- Optimization configuration significantly influences final model performance.
 
 ---
 
 ## 🧠 Conclusion
 
-Deep learning performance is not solely determined by model depth.
+Deep learning performance depends not only on model architecture but heavily on optimization strategy.
 
-Effective generalization depends on:
+Careful tuning of:
+- Learning rate
+- Momentum
+- Weight decay
+- Early stopping
 
-- Careful optimizer selection  
-- Learning rate tuning  
-- Momentum control  
-- Regularization strategy  
-- Monitoring validation divergence  
+can meaningfully influence convergence behavior and generalization performance.
 
 This study highlights the importance of disciplined experimentation when training deep neural networks.
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- TensorFlow / Keras
+- NumPy
+- Pandas
+- Matplotlib
+- Seaborn
 
 ---
 
 ## 🚀 How to Run
 
 1. Clone the repository  
-2. Install required dependencies  
-3. Run the notebook: `CNN_Optimization_Study.ipynb`  
+2. Install dependencies  
+3. Run `CNN_Optimization_Study.ipynb`
 
 ---
-
-## 📬 Contact
-
-Srikant Reddy Nandireddy  
-Open to Data Science | Machine Learning | Generative AI opportunities
